@@ -1,0 +1,448 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#add8e6;
+    --paper-line:#8fc2d2;
+    --ink:#000000;
+    --ink-soft:#1a1a1a;
+    --ledger-red:#8c3a2b;
+    --gold:#a9772f;
+    --gold-deep:#5c3f18;
+    --panel:#ffffff;
+    --good:#1f6b2f;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;padding:0;background:var(--paper);}
+  .wc-wrap{
+    max-width:880px;margin:0 auto;padding:28px 20px 60px;
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);font-size:19px;
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px);
+    background-size: 100% 38px;
+    background-position: 0 96px;
+  }
+  .wc-header{padding-bottom:14px;margin-bottom:6px;border-bottom:3px double var(--ink);}
+  .wc-eyebrow{font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;
+    font-size:15px;color:var(--gold-deep);margin:0 0 4px;font-weight:700;}
+  .wc-title{font-size:34px;margin:0 0 16px;font-weight:700;}
+  .wc-name-row{display:flex;align-items:baseline;gap:10px;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:21px;}
+  .wc-name-row input{
+    flex:1;border:none;border-bottom:2px solid var(--ink);background:transparent;
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:21px;padding:6px 2px;color:var(--ink);outline:none;
+  }
+  .wc-name-row input:focus{border-color:var(--ledger-red);}
+
+  .wc-section{margin-top:26px;}
+  .wc-section-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:2px;
+  }
+  .wc-letter{
+    width:30px;height:30px;flex:none;border:1.5px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;background:var(--panel);
+  }
+  .wc-section-title{font-size:21px;font-weight:700;letter-spacing:.01em;}
+
+  table.wc-table{width:100%;border-collapse:collapse;margin-top:8px;background:var(--panel);
+    box-shadow:0 1px 0 var(--paper-line);}
+  table.wc-table th, table.wc-table td{padding:10px 12px;font-size:19px;text-align:left;}
+  table.wc-table thead th{
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--ink-soft);border-bottom:1.5px solid var(--ink);font-weight:700;
+  }
+  table.wc-table tbody tr{border-bottom:1px solid var(--paper-line);}
+  table.wc-table td.wc-num, table.wc-table th.wc-num{text-align:right;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;}
+  .wc-count-input{
+    width:80px;text-align:right;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:20px;
+    border:1px solid var(--paper-line);background:#ffffff;padding:8px 8px;border-radius:3px;color:var(--ink);
+  }
+  .wc-count-input:focus{outline:none;border-color:var(--gold);}
+  tr.wc-subtotal td{font-weight:700;background:#e4f2f7;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;}
+  tr.wc-subtotal td.wc-label{font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;}
+
+  .wc-summary{
+    margin-top:30px;background:var(--panel);border:1.5px solid var(--ink);padding:18px 20px;
+  }
+  .wc-summary-row{display:flex;justify-content:space-between;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;
+    font-size:19px;padding:6px 0;border-bottom:1px dotted var(--paper-line);}
+  .wc-summary-row:last-child{border-bottom:none;}
+  .wc-summary-row.wc-final{
+    margin-top:6px;border-top:2px solid var(--ink);border-bottom:none;padding-top:14px;
+    font-size:26px;font-weight:700;color:var(--gold-deep);
+  }
+
+  .wc-life{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;margin-top:8px;}
+  .wc-life label{display:block;font-size:16px;color:var(--ink-soft);font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;
+    text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:700;}
+  .wc-life input{width:100%;border:1px solid var(--paper-line);background:var(--panel);
+    padding:8px 10px;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:19px;border-radius:3px;color:var(--ink);}
+
+  .wc-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  button.wc-btn{
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:18px;letter-spacing:.04em;text-transform:uppercase;
+    padding:13px 22px;border:1.5px solid var(--ink);background:var(--ink);color:var(--panel);
+    cursor:pointer;border-radius:3px;font-weight:700;
+  }
+  button.wc-btn.wc-secondary{background:transparent;color:var(--ink);}
+  button.wc-btn:hover{background:var(--ledger-red);border-color:var(--ledger-red);color:#fff;}
+  button.wc-btn.wc-secondary:hover{background:var(--panel);color:var(--ledger-red);border-color:var(--ledger-red);}
+  button.wc-btn:disabled{opacity:.5;cursor:default;}
+
+  .wc-note{font-size:16.5px;color:var(--ink-soft);margin-top:8px;font-style:italic;}
+  .wc-status{margin-top:14px;font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;font-size:18px;font-weight:700;}
+  .wc-status.ok{color:var(--good);}
+  .wc-status.err{color:var(--ledger-red);}
+
+  .wc-compiled{margin-top:46px;padding-top:20px;border-top:3px double var(--ink);}
+  .wc-compiled-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;}
+  .wc-compiled table td.rank{font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;color:var(--gold-deep);font-weight:700;}
+  .wc-empty{font-size:17.5px;color:var(--ink-soft);padding:14px 0;font-style:italic;}
+  .wc-subhead{margin-top:30px;font-size:18px;font-weight:700;color:var(--ink-soft);
+    font-family:'Inter','Segoe UI',Roboto,Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;}
+  .wc-scroll{overflow-x:auto;margin-top:8px;}
+  .wc-scroll table.wc-table{min-width:760px;}
+  .wc-scroll table.wc-table th, .wc-scroll table.wc-table td{white-space:nowrap;font-size:17px;padding:7px 9px;}
+  .wc-scroll table.wc-table td.wc-namecell{font-weight:700;position:sticky;left:0;background:var(--panel);}
+</style>
+
+<div class="wc-wrap">
+  <div class="wc-header">
+    <p class="wc-eyebrow">Wealth Computation Sheet</p>
+    <h1 class="wc-title">Tiao Zhang Zhilu — Enter Your Cards</h1>
+    <div class="wc-name-row">
+      <span>Name:</span>
+      <input id="wc-name" type="text" placeholder="type your name here" />
+    </div>
+  </div>
+
+  <div class="wc-section">
+    <div class="wc-section-head"><span class="wc-letter">A</span><span class="wc-section-title">Cash</span></div>
+    <table class="wc-table">
+      <thead><tr><th>Description</th><th class="wc-num">Pieces / Count</th></tr></thead>
+      <tbody id="wc-cash-body"></tbody>
+    </table>
+  </div>
+
+  <div class="wc-section">
+    <div class="wc-section-head"><span class="wc-letter">B</span><span class="wc-section-title">Value of Assets Cards</span></div>
+    <table class="wc-table">
+      <thead><tr><th>Description</th><th class="wc-num">Pieces / Count</th></tr></thead>
+      <tbody id="wc-asset-body"></tbody>
+    </table>
+  </div>
+
+  <div class="wc-section">
+    <div class="wc-section-head"><span class="wc-letter">D</span><span class="wc-section-title">Less: Loan Taken</span></div>
+    <table class="wc-table">
+      <thead><tr><th>Description</th><th class="wc-num">Pieces / Count</th></tr></thead>
+      <tbody id="wc-loan-body"></tbody>
+    </table>
+  </div>
+
+  <div class="wc-section">
+    <div class="wc-section-head"><span class="wc-letter">F/G</span><span class="wc-section-title">Bonus &amp; Penalty Points</span></div>
+    <table class="wc-table">
+      <thead><tr><th>Description</th><th class="wc-num">Pieces / Count</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="wc-label">Add "Bonus Points"</td>
+          <td class="wc-num"><input class="wc-count-input" type="number" min="0" step="1" placeholder="0" id="wc-bonus-count"></td>
+        </tr>
+        <tr>
+          <td class="wc-label">Less "Penalty Points"</td>
+          <td class="wc-num"><input class="wc-count-input" type="number" min="0" step="1" placeholder="0" id="wc-penalty-count"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="wc-section">
+    <div class="wc-section-head"><span class="wc-letter">•</span><span class="wc-section-title">Tracking Your Life Events (optional)</span></div>
+    <div class="wc-life">
+      <div><label>1. Marriage</label><input type="date" id="wc-ev-marriage"></div>
+      <div><label>2. First child</label><input type="date" id="wc-ev-child1"></div>
+      <div><label>3. Second child</label><input type="date" id="wc-ev-child2"></div>
+    </div>
+  </div>
+
+  <div class="wc-summary">
+    <div class="wc-summary-row wc-final"><span>H — FINAL WEALTH COMPUTED</span><span id="wc-h-total">$0</span></div>
+  </div>
+
+  <div class="wc-actions">
+    <button class="wc-btn" id="wc-submit-btn">Submit My Sheet</button>
+    <button class="wc-btn wc-secondary" id="wc-reset-btn">Clear Form</button>
+  </div>
+  <p class="wc-note">Submitting adds your name and totals to a shared Google Sheet.</p>
+  <div class="wc-status" id="wc-status"></div>
+
+  <div class="wc-compiled" id="wc-compiled-section" style="display:none;">
+    <div class="wc-compiled-head">
+      <div class="wc-section-title">Compiled Submissions</div>
+      <div style="display:flex;gap:10px;">
+        <button class="wc-btn wc-secondary" id="wc-refresh-btn" style="padding:8px 14px;">Refresh</button>
+        <button class="wc-btn wc-secondary" id="wc-export-btn" style="padding:8px 14px;">Export CSV</button>
+      </div>
+    </div>
+    <div id="wc-compiled-area"><p class="wc-empty">Loading submissions…</p></div>
+    <div class="wc-subhead" id="wc-breakdown-head" style="display:none;">Pieces / Count by Item, by User</div>
+    <div class="wc-scroll" id="wc-breakdown-area"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Compiled results only show when the page URL has ?admin=1 (e.g. yoursite.com/form.html?admin=1)
+  const IS_ADMIN = new URLSearchParams(window.location.search).get('admin') === '1';
+
+  // ↓↓↓ Paste your Google Apps Script Web App URL here (ends in /exec) ↓↓↓
+  const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbzMrnTUf282znbeozGFfQWZcgf0SLi-E5w0fuZdf6-lIggKD7i2fOS4NzBB_W9VoTul/exec';
+
+  const cashItems = [
+    {label:'$5,000', factor:5000},
+    {label:'$1,000', factor:1000},
+    {label:'$500', factor:500},
+    {label:'$100', factor:100},
+  ];
+  const assetItems = [
+    {label:'House Purchased', factor:12500},
+    {label:'Investment in Shares', factor:3000},
+    {label:'Investment in Business', factor:10000},
+    {label:'Assurance Insurance', factor:7500},
+    {label:'Health Insurance', factor:2500},
+    {label:'RSP 24', factor:11000},
+    {label:'RSP 42', factor:5000},
+    {label:'RSP 60', factor:2300},
+    {label:'RSP 71', factor:1000},
+  ];
+  const loanItems = [
+    {label:'Parent Help Line ($1,500)', factor:1500},
+    {label:'Parent Help Line ($3,000)', factor:3000},
+    {label:'Parent Help Line ($5,000)', factor:5000},
+    {label:'Loan # 1 ($2,500)', factor:5000},
+    {label:'Loan # 2 ($5,000)', factor:10000},
+    {label:'Loan # 3 ($7,500)', factor:15000},
+  ];
+
+  const breakdownColumns = [
+    ...cashItems.map(it => it.label),
+    ...assetItems.map(it => it.label),
+    ...loanItems.map(it => it.label),
+    'Bonus Points',
+    'Penalty Points',
+  ];
+
+  // Full column order sent to / read from the Google Sheet.
+  const SHEET_HEADERS = [
+    'SubmittedAt','Name', ...breakdownColumns,
+    'SubtotalA','SubtotalB','TotalAssetsC','LoansD','NetAssetsE','BonusValue','PenaltyValue','FinalWealthH',
+    'Marriage','FirstChild','SecondChild'
+  ];
+
+  function fmt(n){
+    const rounded = Math.round(n);
+    const neg = rounded < 0;
+    const s = Math.abs(rounded).toLocaleString('en-US');
+    return neg ? '($' + s + ')' : '$' + s;
+  }
+
+  function buildRows(items, tbodyId, prefix){
+    const tbody = document.getElementById(tbodyId);
+    items.forEach((it, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="wc-label">${it.label}</td>
+        <td class="wc-num"><input class="wc-count-input" type="number" min="0" step="1" placeholder="0" id="${prefix}-count-${idx}"></td>`;
+      tbody.appendChild(tr);
+    });
+  }
+  buildRows(cashItems, 'wc-cash-body', 'wc-cash');
+  buildRows(assetItems, 'wc-asset-body', 'wc-asset');
+  buildRows(loanItems, 'wc-loan-body', 'wc-loan');
+
+  function getCount(prefix, idx){
+    const el = document.getElementById(`${prefix}-count-${idx}`);
+    const v = parseFloat(el.value);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+
+  function recompute(){
+    let aTotal = 0;
+    cashItems.forEach((it, idx) => { aTotal += getCount('wc-cash', idx) * it.factor; });
+    let bTotal = 0;
+    assetItems.forEach((it, idx) => { bTotal += getCount('wc-asset', idx) * it.factor; });
+    let dTotal = 0;
+    loanItems.forEach((it, idx) => { dTotal += getCount('wc-loan', idx) * it.factor; });
+    const cTotal = aTotal + bTotal;
+    const eTotal = cTotal - dTotal;
+
+    const bonusCount = parseFloat(document.getElementById('wc-bonus-count').value) || 0;
+    const penaltyCount = parseFloat(document.getElementById('wc-penalty-count').value) || 0;
+    const bonusValue = bonusCount * 1000;
+    // Penalty Points now genuinely reduce the total (1,000 per point subtracted):
+    const penaltyValue = -1000 * penaltyCount;
+    const fgTotal = bonusValue + penaltyValue;
+    const hTotal = eTotal + fgTotal;
+
+    document.getElementById('wc-h-total').textContent = fmt(hTotal);
+
+    return {aTotal, bTotal, cTotal, dTotal, eTotal, bonusValue, penaltyValue, fgTotal, hTotal};
+  }
+
+  document.querySelectorAll('input[type=number]').forEach(el => el.addEventListener('input', recompute));
+  recompute();
+
+  document.getElementById('wc-reset-btn').addEventListener('click', () => {
+    document.querySelectorAll('input[type=number]').forEach(el => el.value = '');
+    document.getElementById('wc-name').value = '';
+    ['wc-ev-marriage','wc-ev-child1','wc-ev-child2'].forEach(id => document.getElementById(id).value = '');
+    const btn = document.getElementById('wc-submit-btn');
+    btn.disabled = false;
+    btn.textContent = 'Submit My Sheet';
+    recompute();
+  });
+
+  const statusEl = document.getElementById('wc-status');
+  function setStatus(msg, ok){
+    statusEl.textContent = msg;
+    statusEl.className = 'wc-status ' + (ok ? 'ok' : 'err');
+  }
+
+  document.getElementById('wc-submit-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('wc-submit-btn');
+    const name = document.getElementById('wc-name').value.trim();
+    if (!name){
+      setStatus('Please enter your name before submitting.', false);
+      return;
+    }
+    if (!ENDPOINT_URL || ENDPOINT_URL.indexOf('PASTE_YOUR') === 0){
+      setStatus('This page is not connected to a Google Sheet yet — set ENDPOINT_URL in the code.', false);
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    const totals = recompute();
+    const counts = [
+      ...cashItems.map((it, idx) => getCount('wc-cash', idx)),
+      ...assetItems.map((it, idx) => getCount('wc-asset', idx)),
+      ...loanItems.map((it, idx) => getCount('wc-loan', idx)),
+      parseFloat(document.getElementById('wc-bonus-count').value) || 0,
+      parseFloat(document.getElementById('wc-penalty-count').value) || 0,
+    ];
+    const values = [
+      new Date().toISOString(), name, ...counts,
+      totals.aTotal, totals.bTotal, totals.cTotal, totals.dTotal, totals.eTotal,
+      totals.bonusValue, totals.penaltyValue, totals.hTotal,
+      document.getElementById('wc-ev-marriage').value,
+      document.getElementById('wc-ev-child1').value,
+      document.getElementById('wc-ev-child2').value,
+    ];
+    try{
+      const resp = await fetch(ENDPOINT_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'text/plain;charset=utf-8'}, // avoids a CORS preflight Apps Script can't handle
+        body: JSON.stringify({headers: SHEET_HEADERS, values}),
+      });
+      if (!resp.ok) throw new Error('Sheet responded with ' + resp.status);
+      setStatus('Saved! Your sheet has been recorded.', true);
+      btn.textContent = 'Submitted';
+      // Button stays disabled — prevents accidental duplicate rows from repeat clicks.
+      if (IS_ADMIN) loadCompiled();
+    }catch(e){
+      setStatus('Error saving your sheet: ' + e.message, false);
+      btn.disabled = false;
+      btn.textContent = 'Submit My Sheet';
+    }
+  });
+
+
+  let lastRows = [];
+
+  async function loadCompiled(){
+    const area = document.getElementById('wc-compiled-area');
+    area.innerHTML = '<p class="wc-empty">Loading submissions…</p>';
+    if (!ENDPOINT_URL || ENDPOINT_URL.indexOf('PASTE_YOUR') === 0){
+      area.innerHTML = '<p class="wc-empty">Not connected to a Google Sheet yet — set ENDPOINT_URL in the code.</p>';
+      renderBreakdown([]);
+      return;
+    }
+    try{
+      const resp = await fetch(ENDPOINT_URL, {method: 'GET'});
+      if (!resp.ok) throw new Error('Sheet responded with ' + resp.status);
+      const data = await resp.json();
+      const rows = data.rows || [];
+      if (rows.length === 0){
+        area.innerHTML = '<p class="wc-empty">No submissions yet. Be the first to submit your sheet above.</p>';
+        lastRows = [];
+        renderBreakdown([]);
+        return;
+      }
+      rows.sort((a,b) => (Number(b.FinalWealthH)||0) - (Number(a.FinalWealthH)||0));
+      lastRows = rows;
+
+      let html = '<table class="wc-table"><thead><tr>' +
+        '<th>#</th><th>Name</th><th class="wc-num">Net Assets (E)</th>' +
+        '<th class="wc-num">Final Wealth (H)</th><th>Submitted</th></tr></thead><tbody>';
+      rows.forEach((r, i) => {
+        const when = r.SubmittedAt ? new Date(r.SubmittedAt).toLocaleString() : '';
+        html += `<tr><td class="rank">${i+1}</td><td>${escapeHtml(r.Name)}</td>` +
+          `<td class="wc-num">${fmt(Number(r.NetAssetsE)||0)}</td>` +
+          `<td class="wc-num">${fmt(Number(r.FinalWealthH)||0)}</td>` +
+          `<td>${when}</td></tr>`;
+      });
+      html += '</tbody></table>';
+      area.innerHTML = html;
+
+      renderBreakdown(rows);
+    }catch(e){
+      area.innerHTML = '<p class="wc-empty">Could not load submissions: ' + escapeHtml(e.message) + '</p>';
+      renderBreakdown([]);
+    }
+  }
+
+  function renderBreakdown(rows){
+    const headEl = document.getElementById('wc-breakdown-head');
+    const area = document.getElementById('wc-breakdown-area');
+    if (!rows.length){
+      headEl.style.display = 'none';
+      area.innerHTML = '';
+      return;
+    }
+    headEl.style.display = 'block';
+    let html = '<table class="wc-table"><thead><tr><th>Name</th>';
+    breakdownColumns.forEach(col => { html += `<th class="wc-num">${escapeHtml(col)}</th>`; });
+    html += '</tr></thead><tbody>';
+    rows.forEach(r => {
+      html += `<tr><td class="wc-namecell">${escapeHtml(r.Name)}</td>`;
+      breakdownColumns.forEach(col => { html += `<td class="wc-num">${Number(r[col])||0}</td>`; });
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    area.innerHTML = html;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  document.getElementById('wc-refresh-btn').addEventListener('click', loadCompiled);
+
+  document.getElementById('wc-export-btn').addEventListener('click', () => {
+    if (!lastRows.length){ setStatus('Nothing to export yet.', false); return; }
+    const rows = lastRows.map(r => SHEET_HEADERS.map(h => r[h]));
+    const csv = [SHEET_HEADERS, ...rows].map(row => row.map(v => `"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'wealth-computation-submissions.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  if (IS_ADMIN){
+    document.getElementById('wc-compiled-section').style.display = 'block';
+    loadCompiled();
+  }
+})();
+</script>
